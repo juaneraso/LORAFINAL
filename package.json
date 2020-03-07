@@ -1,0 +1,30 @@
+{
+  "name": "sockets",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "curl": "^0.1.4",
+    "express": "^4.16.4",
+    "leaflet": "^1.5.1",
+    "min-jquery": "^1.7.0",
+    "mongodb": "^3.3.0",
+    "mongoose": "^5.7.13",
+    "morris": "^0.1.4",
+    "nodemon": "^1.18.5",
+    "ol": "^5.3.3",
+    "socket.io": "^2.1.1",
+    "ttn": "^2.3.3",
+    "xmlhttprequest": "^1.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.5"
+  },
+  "description": ""
+}
