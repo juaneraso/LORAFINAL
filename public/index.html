@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style>
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:700);
+body {
+  font-family: 'Open Sans', sans-serif;
+  padding: 0px;
+  color:#AD0B0B;
+}
+.texto-vertical-2 {
+
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+}
+</style>
+</head>
+
+<body>
+  <div class="class="grid-block" style="background-image: url('fondo.png'); width: auto; height: 100vh;"">
+    <div class="container" align="center">
+      <br><br><br><br><br><br><br><br><br><br>
+      <h1>Ingresa Tus Datos</h1>
+           <form id="Sesion" name="login">
+           <table width="200" border="0">
+             <tr>
+               <th scope="row"><h2 id="Us">Usuario</h2></th>
+               <td><span class="cnt"><br>
+                 <input name="usuario" type="text" class="Input" value="" size="20" />
+               </span></td>
+             </tr>
+             <tr>
+               <th height="33" scope="row"><h2>Clave</h2></th>
+               <td><span class="cnt"><br>
+                 <input name="password" type="password" class="Input" value="" size="20" />
+               </span></td>
+               <td><span class="cnt"><br>
+               <input value="Entrar" target="_parent" onclick="Login()" type="button" class="boton"/>
+              </span></td>
+               </tr>
+
+           </table>
+      </form>
+      </div>
+<script language="Javascript">
+<!-- Begin
+document.oncontextmenu = function(){return false}
+// End -->
+</script>
+<script src="main.js" charset="utf-8"></script>
+</body>
+</html>

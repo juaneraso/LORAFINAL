@@ -1,0 +1,251 @@
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <link rel="stylesheet" href="http://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Sensores</title>
+  </head>
+  <title>Sensores</title>
+<style>
+
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans:700);
+    body {
+      font-family: 'Open Sans', sans-serif;
+      padding: 20px;
+      position: relative;
+    }
+  .texto-vertical-2 {
+      writing-mode: vertical-lr;
+      transform: rotate(180deg);
+    }
+
+/* Style the arrow inside the select element: */
+</style>
+
+  <body style="background-color:	#E6E6FA;">
+
+    <button type ="button" align="right" id="ret"class="btn btn-primary" onclick= "window.history.back()"
+    style='width:200px; height:40px'>Regresar a Menú</button>
+    <div class="container" align="center">
+    Seleccione Bicicleta
+<input type="number" id="Disp" min="1" max="200" name="" value="1">
+
+
+    <label for="start">Fecha:</label>
+
+    <input type="date" id="start" name="trip-start"
+           value="2019-10-01"
+           min="2019-01-01" max="2021-12-31">
+
+
+  <select class="" name="Ss" id="sensor">
+    <option value="1">Voltaje, Corriente</option>
+    <option value="2">Temperatura, Humedad</option>
+  </select>
+  <button type ="button" id="bot"class="btn btn-primary">Buscar</button>
+<input type="button" id="boton-txt" value="Descargar TXT" class="btn btn-primary"/><br/>
+
+</div>
+<h1 align ="center">SENSORES</h1>
+<div id="tit2">
+
+</div>
+<div id="GRAFICAS">
+
+  </div>
+
+<script>
+var html = `
+
+    <div class="row">
+    <div class="col-md-12">
+    <h2 align ="center">TEMPERATURA</h2>
+    <hr>
+    <div  class="texto-vertical-2">TEMPERATURA °C</div>
+    <div id="temperatura" ></div>
+    </div>
+    </div>
+    <p align="center"> TIEMPO [hh:mm:ss] </p>
+
+      <div class="row">
+      <div class="col-md-12">
+      <h2 align ="center">HUMEDAD</h2>
+      <hr>
+      <div  class="texto-vertical-2">HUMEDAD RELATIVA %</div>
+      <div id="humedad" ></div>
+      </div>
+      </div>
+      <p align="center"> TIEMPO [hh:mm:ss] </p>
+
+`
+var html2 = `
+<div class="row">
+<div class="col-md-12">
+<h2 align ="center">VOLTAJE</h2>
+<hr>
+<div  class="texto-vertical-2">VOLTAJE [V]</div>
+<div id="voltaje" ></div>
+</div>
+</div>
+<p align="center"> TIEMPO [hh:mm:ss] </p>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h3 align ="center">CORRIENTE</h3>
+      <hr>
+      <div  class="texto-vertical-2">CORRIENTE [A]</div>
+      <div id="corriente" ></div>
+    </div>
+    </div>
+<p align="center"> TIEMPO [hh:mm:ss] </p>
+
+  <div class="row">
+  <div class="col-md-12">
+  <h2 align ="center">POTENCIA</h2>
+  <hr>
+  <div  class="texto-vertical-2">POTENCIA [W]</div>
+  <div id="potencia" ></div>
+  </div>
+  </div>
+  <p align="center"> TIEMPO [hh:mm:ss] </p>
+
+  <div class="container" align="center">
+  <div class="row" >
+  <div class="col-md-12" >
+  <h2 align ="center">ENERGIA</h2>
+  <hr>
+  <div id="energia" ></div>
+  </div>
+  </div>
+  </div>
+`
+var html3 = `<p align="center">No hay datos disponibles </p>`
+var html4 = `<p align="center">Buscando </p>`
+
+</script>
+
+
+<script type="text/javascript">
+function descargarArchivo(contenidoEnBlob, nombreArchivo) {
+var reader = new FileReader(); //creamos un FileReader para leer el Blob
+//Definimos la función que manejará el archivo
+//una vez haya terminado de leerlo
+reader.onload = function (event) {
+  var save = document.createElement('a'); //Usaremos un link para iniciar la descarga
+  save.href = event.target.result;
+  save.target = '_blank';
+  save.download = nombreArchivo || 'archivo.dat'; //Truco: así le damos el nombre al archivo
+  var clicEvent = new MouseEvent('click', {
+    'view': window,
+    'bubbles': true,
+    'cancelable': true
+  });
+  //Simulamos un clic del usuario
+  //no es necesario agregar el link al DOM.
+  save.dispatchEvent(clicEvent);
+  //Y liberamos recursos...
+  (window.URL || window.webkitURL).revokeObjectURL(save.href);
+};
+//Leemos el blob y esperamos a que dispare el evento "load"
+reader.readAsDataURL(contenidoEnBlob);
+};
+  function obtenerDatos() {
+      if (estado ==1){
+        return {
+          Voltaje: voltaje,
+          Corriente: corriente,
+          Fecha: fech,
+          id:id,
+          Potencia: potencia,
+          ff: fecha
+        };
+      }
+      if (estado ==2){
+        return {
+          Temperatura: temperatura,
+          Humedad: humedad,
+          Fecha: fech,
+          id:id,
+          ff: fecha
+        };
+      }
+  };
+
+//Genera un objeto Blob con los datos en un archivo TXT
+function generarTexto(datos) {
+
+    if (estado ==1){
+        var texto = [];
+        texto.push('Información del dia ');
+        texto.push(datos.ff);
+        texto.push(' Bicicleta ');
+        texto.push(datos.id);
+        texto.push('\nEnergia del Recorrido [Wh]:\n');
+        texto.push(energia.toFixed(2));
+        texto.push('\nVoltaje [V]:\n');
+        texto.push(datos.Voltaje);
+        texto.push('\nCorriente [A]:\n');
+        texto.push(datos.Corriente);
+        texto.push('\nPotencia [W]:\n');
+        texto.push(datos.Potencia);
+        texto.push('\nFecha:\n');
+        texto.push(datos.Fecha);
+        texto.push('\n');
+        //El constructor de Blob requiere un Array en el primer
+        //parámetro así que no es necesario usar toString. El
+        //segundo parámetro es el tipo MIME del archivo
+        return new Blob(texto, {
+          type: 'text/plain'
+        });
+    }
+    if (estado ==2){
+      var texto = [];
+      texto.push('Información del dia ');
+      texto.push(datos.ff);
+      texto.push(' Bicicleta ');
+      texto.push(datos.id);
+      texto.push('\nTemperatura:\n');
+      texto.push(datos.Temperatura);
+      texto.push('\n');
+      texto.push('Humedad:\n');
+      texto.push(datos.Humedad);
+      texto.push('\n');
+      texto.push('Fecha:\n');
+      texto.push(datos.Fecha);
+      texto.push('\n');
+      //El constructor de Blob requiere un Array en el primer
+      //parámetro así que no es necesario usar toString. El
+      //segundo parámetro es el tipo MIME del archivo
+      return new Blob(texto, {
+        type: 'text/plain'
+      });
+    }
+
+
+};
+
+window.addEventListener('DOMContentLoaded', function(){
+
+      document.getElementById('boton-txt').addEventListener('click', function () {
+        var datos = obtenerDatos();
+        descargarArchivo(generarTexto(datos), 'archivo.txt');
+      }, false);
+
+    }, false);
+  </script>
+
+<script src="main.js" charset="utf-8"></script>
+  </body>
+</html>

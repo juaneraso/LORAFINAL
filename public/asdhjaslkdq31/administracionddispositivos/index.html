@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <link rel="stylesheet" href="http://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+    <script src="main.js" charset="utf-8"></script>
+
+    <meta charset="utf-8">
+    <title>Administración de Bicicletas</title>
+    <style media="screen">
+
+    </style>
+  </head>
+<body style="background-color:	#E6E6FA;">
+    <h1 align="center">Administración de Bicicletas</h1>
+<div class="" align="center">
+  <i>Buscar bicicletas existentes<i>
+    <button type ="button" id="botDataB"class="btn btn-primary"
+    style='width:200px; height:40px; background:Blue'>Buscar</button>
+</div>
+    <div class="" align="center" id="Bicis">
+    </div>
+<div class="" align="center">
+  <br>
+<i>Registrar Bicicleta No:<i>
+<input type="number" id="Agr" value="0" min="1" max="500">
+<button type ="button" id="botDataC"class="btn btn-primary" location.href='https://console.thethingsnetwork.org/'
+style='width:200px; height:40px; background:Blue'>Agregar</button>
+</div>
+<div class="" id = "Dispo" align="center">
+</div>
+
+<div class="" align="center">
+  <br>
+  <i>Borrar bicicleta No:<i>
+  <input type="number" id="Dispos" name="" value="0" min="0" max="500">
+  <button type ="button" id="bDB"class="btn btn-primary"
+  style='width:200px; height:40px; background:Blue'>Borrar</button>
+
+</div>
+<div class="" id="Dispo2" align = "center">
+</div>
+<div class="" align="center">
+  <br>
+  <i>Registrar en plataforma TTN<i>
+  <button type ="button" class="btn btn-primary" onClick="window.location.href='https://console.thethingsnetwork.org/'"
+  style='width:200px; height:40px; background:Blue'>TTN</button>
+</div>
+    </body>
+  <script src="main.js" charset="utf-8"></script>
+</html>
